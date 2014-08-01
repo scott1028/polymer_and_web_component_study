@@ -1,0 +1,26 @@
+<!-- Define Template -->
+<template id="test2">
+    <blockquote>
+        <div>312321</div>
+        <p>5555</p>
+    </blockquote>
+</template>
+
+<!-- HTML 建構子 -->
+<!-- 會是 main.html 的角度來執行 -->
+<!-- 用來做為 Init Function -->
+<script>
+    console.log('hello world in utils.html');
+    var utils_version = 1.0;
+
+    var proto = Object.create(HTMLElement.prototype, {
+      createdCallback: {
+        value: function() {
+          var t = document.querySelector('link#ui_1').import.querySelector('#test2');
+          var clone = document.importNode(t.content, true); // t.content 從 template tag 取到內容
+          this.createShadowRoot().appendChild(clone);
+        }
+      }
+    });
+    document.registerElement('x-ele-by-import', {prototype: proto});
+</script>

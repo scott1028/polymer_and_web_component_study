@@ -1,0 +1,70 @@
+<html>
+<head>
+    <title>HTML Web Component Study</title>
+</head>
+<body>
+    <h1>展示 HTML5 Web Component 範例</h1>
+
+    <!-- Web Component Define and use customize element -->
+        <script type="text/javascript">
+            
+            // Define a new elm
+            var my_elm = Object.create(HTMLElement.prototype);
+            my_elm.createdCallback  = function() {
+                // init
+                console.log('my elm invoke');
+                this.textContent = 'Hello World by New Element';
+            };
+
+            // regist to HTML Document, 似乎要用 \w-\w.*? 開頭來命名 Element
+            var xtest = document.registerElement('x-test', {
+              prototype: my_elm
+            });
+
+        </script>
+
+        <!-- 使用這個元件 -->
+        <x-test></x-test>
+        <br>
+        <x-test></x-test>
+
+    <hr />
+
+    <!-- Web Component Define a Template(初始的時候不會被解析, 只有再引用的時候解析) -->
+        <template id="ta">
+            <div>
+                <img src="">
+                <div class="comment-text"></div>
+            </div>
+        </template>
+
+        <script>
+            function addComment(imageUrl, text) {
+              // 只會得到裡面的內容(去除 Template Tag 部分)
+              var t = document.querySelector("#ta");
+              var comment = t.content.cloneNode(true);
+
+              // Populate content.
+              comment.querySelector('img').src = imageUrl;
+              comment.querySelector('.comment-text').textContent = text;
+              document.body.appendChild(comment);
+            }
+
+       </script>
+
+    <!-- Import Web Component 定義文件部分, 或是其他地方的 HTML 本文, 基本上跟 C++ 的 Include 類似 -->
+    <!-- 自定义元素和装饰器可以从外部文件加载，需使用 link 标签 -->
+        <link rel="import" id="ui_1" href="utils.html">
+
+        <!-- 使用 utils.html 內定義的元件 -->
+        <x-ele-by-import></x-ele-by-import>
+
+    <hr />
+
+    <script>
+        document.body.onload = function(){
+            addComment('/', 123);
+        }
+    </script>
+</body>
+</html>
