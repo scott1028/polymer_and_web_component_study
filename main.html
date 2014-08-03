@@ -4,6 +4,13 @@
 </head>
 <body>
     <h1>展示 HTML5 Web Component 範例</h1>
+    <ul>
+        <li>1. Template Tag(Create Web Component Template for being invoked)</li>
+        <li>2. Shadow Dom(CSS Scope & Content Replace & Virtual Element)</li>
+        <li>3. Custom Elements</li>
+        <li>4. Packaging</li>
+    </ul>
+    <hr />
 
     <!-- Web Component Define and use customize element -->
         <script type="text/javascript">
@@ -62,9 +69,120 @@
     <hr />
 
     <script>
-        document.body.onload = function(){
+        setTimeout(function(){
             addComment('/', 123);
-        }
+        }, 3000);
     </script>
+
+    <br>
+
+    <!-- Shadow DOM Skill -->
+
+        <!-- this ele is not be render -->
+        <template id="shadow_style">
+            <style>
+                p {
+                    color: blue;
+                }
+            </style>
+        </template>
+
+        <style type="text/css">
+            p {
+                color: red;
+            }
+        </style>
+
+        <button>Hello, world!</button>
+        <script>
+        var host = document.querySelector('button');
+        var root = host.createShadowRoot();
+        root.textContent = 'こんにちは、影の世界!';
+        </script>
+
+        <p id="test">3213</p>
+        <script>
+
+        var host1 = document.querySelector('#test');
+
+        var root1 = host1.createShadowRoot();
+        var hr1 = document.createElement('hr');
+        var hr2 = document.createElement('hr');
+        var p = document.createElement('p')
+        p.textContent = 'I am in shadow root Scope not in main document scope';
+        host1.shadowRoot.appendChild(hr1);
+        host1.shadowRoot.appendChild(p);
+        host1.shadowRoot.appendChild(hr2);
+
+        var shadow_style = document.querySelector('#shadow_style');
+
+        host1.shadowRoot.appendChild(shadow_style.content);
+
+        </script>
+
+        <p>Main document "p" tag</p>
+
+        <!-- Shadow DOM Content Operation -->
+        <template id="my_ele2">
+            <div>
+                <div>add new note1 here...</div>
+                <div style="color: red;"><content></content></div>
+                <div>add new note2 here...(operation shadow dom style)</div>
+            </div>
+            <p>use &lt;content&gt;&lt;/content&gt; tag for textContent replace mark</p>
+        </template>
+
+
+        <div id="my_ele2_target">Test Div Text Content</div>
+
+        <script>
+            var met2 = document.querySelector('#my_ele2_target');
+            var met2_root = met2.createShadowRoot();
+            // replace origin root shadow
+            var tmp = document.querySelector('#my_ele2').content;
+            met2.shadowRoot.appendChild(tmp);
+
+            // operation shadow dom style
+            document.querySelector('#my_ele2_target')
+                .shadowRoot.querySelector('div > div:last-child')
+                .style.color="orange";
+        </script>
+
+        <div id="test3">22</div>
+        <script>
+            var tt3 = document.querySelector('#test3');
+            var ori = tt3.createShadowRoot();
+            // modify origin element.content for update;
+            ori.textContent = 'eqwe';
+        </script>
+    <br>
+
+    <!-- Decorator - Config DOM by CSS Way -->
+        <decorator id="myDecorator0">
+            <!-- a least one template tag included -->
+            <template>
+                <div class="slide">
+                    <content></content>
+                    <div class="slogan">
+                        <content select="slogan"></content>
+                    </div>
+                    <p>id: test3</p>
+                </div>
+            </template>
+        </decorator>
+
+        <div id="test3" my-customize-scope>
+            Decorator Tag is not available[not suuport] for chrome browser now.
+        </div>
+
+        <style>
+            div#test3[my-customize-scope] {
+                decorator: url(#myDecorator0);
+                color: blue;
+            }
+        </style>
+
+        <br><br>
+
 </body>
 </html>
