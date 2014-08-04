@@ -1,0 +1,21 @@
+{
+  "name": "html5_web_component_study",
+  "version": "0.0.1",
+  "homepage": "https://github.com/scott1028/html5_web_component_study",
+  "authors": [
+    "scott.lan <scott.lan@taisys.com>"
+  ],
+  "main": "polymer_demo.html",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#~0.3.4"
+  }
+}

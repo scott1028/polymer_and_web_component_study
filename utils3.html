@@ -1,0 +1,67 @@
+<!-- Full Version Web Component Design -->
+
+<template id="testWebCmp">
+    <div>
+        WebCmp
+    </div>
+    <style>
+        div {
+          color: yellow;
+          background-color: #303030;
+        }
+    </style>
+    <script>
+        console.log('active template');
+    </script>
+</template>
+
+<div id="testWebCmp2">777777</div>
+
+<<script>
+    document.querySelector('link[href="utils3.html"]').import.cloneNode(true);
+    var myElm = Object.create(HTMLElement.prototype, {
+        createdCallback: {
+            value: function(){
+                // this.textContent += '...init'
+                console.log('myElm init!');
+
+                // here will active testWebCmp Template
+                this.createShadowRoot().appendChild(
+                    document.querySelector('link[href="utils3.html"]').import.querySelector('template#testWebCmp').content.cloneNode(true));
+            }
+        }
+    });
+
+    document.registerElement('my-elm', {
+        prototype: myElm
+    });
+
+    var elm2;
+
+    // to find target from all link import tag
+    for(var i = 0; i < document.querySelectorAll('link').length; i++){
+        console.log(document.querySelectorAll('link')[i].import.querySelector('template#testWebCmp'));
+        console.log(document.querySelectorAll('link')[i].import.querySelector('div#testWebCmp2'));
+        if(document.querySelectorAll('link')[i].import.querySelector('div#testWebCmp2')){
+            elm2 = document.querySelectorAll('link')[i].import.querySelector('div#testWebCmp2');
+        }
+    }
+
+    var myElm2 = Object.create(HTMLElement.prototype, {
+        createdCallback: {
+            value: function(){
+                // this.textContent += '...init'
+                console.log('myElm init!');
+
+                // here will active testWebCmp Template
+                this.createShadowRoot().appendChild(
+                    elm2
+                );
+            }
+        }
+    });
+
+    document.registerElement('my-elm2', {
+        prototype: myElm2
+    });
+</script>

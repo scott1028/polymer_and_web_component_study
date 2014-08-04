@@ -1,0 +1,46 @@
+<html>
+    <script src="bower_components/platform/platform.js"></script>
+    <script src="bower_components/polymer/polymer.js"></script>
+    <body>
+        <!-- Define -->
+        <polymer-element name="proto-element">
+          <template>
+            <span>I'm {{name}} <b>proto-element</b>. Check out my prototype.</span>
+            <template repeat="{{row in store}}">
+                <p>{{row}}</p>
+                <style>
+                    p {
+                        color: red;
+                    }
+                </style>
+            </template>
+          </template>
+          <script>
+            Polymer('proto-element', {
+              ready: function() {
+                // init
+                this.shadowRoot.querySelector('span b').textContent += " By Scott";
+
+                var fd = this;
+                var i = this.store.length + 1;
+
+                // ajax prepare remote data
+                setInterval(function(){
+                    // make a closure
+                    // console.log(fd);
+                    fd.store.push(++i);
+                }, 1000);
+
+              },
+              // customize value;
+              name: 'Blue',
+              store: [1, 2, 3, 4]
+            });
+          </script>
+        </polymer-element>
+
+        <!-- Invoke -->
+        <proto-element></proto-element>
+        <p>Hello all</p>
+    </body>
+</html>
