@@ -60,6 +60,7 @@
 
     <!-- Create by Web Component -->
         <link rel="import" id="ui_1" href="utils2.html">
+        <link rel="import" id="ui_1" href="utils.html">
         <p>In shadow dom:</p>
         <div id="for_test4"></div>
         <script>
@@ -69,7 +70,12 @@
             var tdiv = document.querySelector('div#for_test4');
             var rootS = tdiv.createShadowRoot();
             // .createShadowRoot() will shadow origin content element.
-            rootS.appendChild(tpl);
+            rootS.appendChild(tpl); // a dom, once you appendChild you cant modify tpl handle.
+
+            // but you can remove child elm by this way:
+            // for(var i = 0 ;i < rootS.children.length; i++){
+            //     rootS.removeChild(rootS.children[i]);
+            // }
         </script>
         <p>In main dom:</p>
         <div>
@@ -78,6 +84,11 @@
 
         <template id="test5">
             <div>hello all5</div>
+            <style>
+                div {
+                    color: blue;
+                }
+            </style>
         </template>
         <template id="test6">
             <div>hello all6</div>
@@ -85,18 +96,41 @@
 
         <script>
             // Same Scope Dom can be selector
-            var _t_div = document.querySelector('template#test5').content.querySelector('div');
+            var _t_div = document.querySelector('template#test5').content.cloneNode(true);
             var _t_div2 = document.querySelector('template#test6').content.querySelector('div');
 
+            window.switch = true;
             var change_shadow_dom = function(){
+                // http://stackoverflow.com/questions/3955229/remove-all-child-elements-of-a-dom-node-in-javascript
+                // This is a bug statement.
+                // for(var i = 0 ;i < rootS.children.length; i++) rootS.removeChild(rootS.children[i]);
+                // all fine!
+                while(rootS.firstChild) rootS.removeChild(rootS.firstChild);
 
                 if(
-                    tdiv.shadowRoot.querySelector('div').textContent != 'hello all5'
+                    // tdiv.shadowRoot.querySelector('div').textContent != 'hello all5'
+                    window.switch
                     ){
-                    tdiv.createShadowRoot().appendChild(_t_div);
+                    // tdiv.createShadowRoot().appendChild(_t_div);
+                    // try{
+                    //     rootS.removeChild(_t_div2);
+                    // }
+                    // catch(e){}
+
+                    // clone to create a new template node
+                    var _t_div = document.querySelector('template#test5').content.cloneNode(true);
+                    rootS.appendChild(_t_div);
+
+                    window.switch = !window.switch;
                 }
                 else{
-                    tdiv.createShadowRoot().appendChild(_t_div2);
+                    // tdiv.createShadowRoot().appendChild(_t_div2);
+                    // try{
+                    //     rootS.removeChild(_t_div);
+                    // }
+                    // catch(e){}
+                    rootS.appendChild(_t_div2);
+                    window.switch = !window.switch;
                 }
                 // only once access
                 // tdiv.createShadowRoot().appendChild(tpl);
@@ -129,13 +163,19 @@
             clone_tmp_div.textContent += ' add string...'
         </script>
 
+    <!-- Combine Template-Registor Element Tag -->
+        <link rel="import" id="ui_1" href="utils3.html">
+        <my-elm></my-elm>
+        <br>
+        <my-elm2></my-elm2>
+
     <!-- Test Scoped CSS, only Firefox support -->
         <div>
             <p>1</p>
             <p>2</p>
             <style scoped>
                 div {
-                    color: #445566;
+                    color: silver;
                 }
             </style>
             <div>2.5</div>
