@@ -63,7 +63,8 @@
         <p>In shadow dom:</p>
         <div id="for_test4"></div>
         <script>
-            var tpl = document.querySelector('link').import.querySelector('#test4').content;
+            // import only be used for once, so you must use .cloneNode(true) to clone template, if you are not that the tpl node only can be use for onece
+            var tpl = document.querySelector('link').import.querySelector('#test4').content.cloneNode(true);
             // test selector
             var tdiv = document.querySelector('div#for_test4');
             var rootS = tdiv.createShadowRoot();
@@ -106,5 +107,39 @@
         </script>
 
         <button onclick="change_shadow_dom();">change_shadow_dom</button>
+
+        <hr />
+        <div id="test7"></div>
+        <script>
+            // http://www.html5rocks.com/zh/tutorials/webcomponents/imports/
+            var clone_tmp = document.querySelector('link').import.querySelector('#test4').content.cloneNode(true);
+            var clone_tmp_div = clone_tmp.querySelector('div');
+            clone_tmp_div.textContent += '(clone)'
+            // clone_tmp
+            document.querySelector('div#test7').createShadowRoot().appendChild(clone_tmp);
+
+            try{
+                clone_tmp.querySelector('div').textContent = 'test';
+            }
+            catch(e){
+                console.log('Can not be modify when it has been inject to DOM');
+            }
+
+            // but can use operation handle to update it
+            clone_tmp_div.textContent += ' add string...'
+        </script>
+
+    <!-- Test Scoped CSS, only Firefox support -->
+        <div>
+            <p>1</p>
+            <p>2</p>
+            <style scoped>
+                div {
+                    color: #445566;
+                }
+            </style>
+            <div>2.5</div>
+            <p>3</p>
+        </div>
 </body>
 </html>
