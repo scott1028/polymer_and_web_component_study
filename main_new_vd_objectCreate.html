@@ -1,0 +1,62 @@
+<html>
+    <body>
+        <script>
+            // test Object.create for Inherits Prototype
+            var c = function(){
+            };
+            c.prototype.echo = function(){
+                console.log('test echo');
+            };
+            var c_sub = function(){};
+            c_sub.prototype = Object.create(c.prototype);
+
+            // like new statement;
+            console.log( Object.create(c.prototype) instanceof c );
+            console.log( new c instanceof c );
+
+            // new class is very similar to Object.create(class.prototype);
+            // you can new Class or Object.create(Class.prototype),
+            // but you can not new HTMLElement() instead new HTMLElement, this statement will throw error;
+        </script>
+
+        <script>
+            // Object.create Test & Try
+            // Object.getPrototypeOf 函式會取得原始物件的原型
+            var newObj = Object.create(null, {
+                    size: {
+                        value: "large",
+                        enumerable: true
+                    },
+                    shape: {
+                        value: "round",
+                        enumerable: true
+                    },
+                    echo: {
+                        value: function(){
+                            console.log('newObj echo!');
+                        }
+                    }
+                });
+
+            console.log(newObj.size);
+            console.log(newObj.shape);
+            console.log(Object.getPrototypeOf(newObj));
+            newObj.echo();
+
+            // Output:
+            // large
+            // round
+            // null
+        </script>
+
+        <!-- Test Javascript .contructor perperty explanation -->
+        <!-- Constructor FN Refer to self function -->
+        <script>
+            var k = function(){console.log('k init')};
+            var ik = new k;
+            console.log(ik.constructor == k);
+            console.log(ik.constructor == k.prototype.constructor);
+            console.log(k == k.prototype.constructor);
+        </script>
+    </body>
+</html>
