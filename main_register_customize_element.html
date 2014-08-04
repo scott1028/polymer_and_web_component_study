@@ -28,8 +28,13 @@
             prototype: mybt_proto
         });
 
-        // second code style, button element prototype
-        var mybt_proto2 = Object.create(HTMLButtonElement.prototype);
+        // second code style, button element prototype.
+        // prototype is also a object.
+        /*
+            var k = function(){};
+            a.prototype = new Date();       // like this way!
+        */
+        var mybt_prototype_2 = Object.create(HTMLButtonElement.prototype);
         mybt_proto2.createdCallback = function(){
             console.log('mybt_proto2 init\n');
         };
@@ -86,7 +91,7 @@
         console.log(newObj.shape);
         console.log(Object.getPrototypeOf(newObj));
         newObj.echo();
-        
+
         // Output:
         // large
         // round
