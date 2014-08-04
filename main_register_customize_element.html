@@ -1,0 +1,66 @@
+<html>
+<body>
+    <script>
+
+        // 回调名称                                                 调用时间点
+        // createdCallback                                         创建元素实例
+        // attachedCallback                                        向文档插入实例
+        // detachedCallback                                        从文档中移除实例
+        // attributeChangedCallback(attrName, oldVal, newVal)      添加，移除，或修改一个属性
+
+        // first code style, general element prototype
+        var mybt_proto = Object.create(HTMLElement.prototype, {
+            createdCallback: {
+                // callback fn add to value node
+                value: function(){
+                    console.log('Init');
+                    console.log(this.textContent);
+                    console.log(this.innerHTML);
+                    console.log(this.attributes.url);
+                    console.log(this.attributes);
+                    console.log('\n');
+                    // debugger;
+                }
+            }
+        });
+
+        document.registerElement('scott-panel', {
+            prototype: mybt_proto
+        });
+
+        // second code style, button element prototype
+        var mybt_proto2 = Object.create(HTMLButtonElement.prototype);
+        mybt_proto2.createdCallback = function(){
+            console.log('mybt_proto2 init\n');
+        };
+
+        document.registerElement('scott-panel2', {
+            prototype: mybt_proto2
+        });
+
+        var elm2 = document.createElement('scott-panel2');
+        document.body.appendChild(elm2);
+
+    </script>
+
+    <scott-panel url="http://www.hinet.net">Test1</scott-panel>
+    <hr />
+
+    <script>
+        // test Object.create for Inherits Prototype
+        var c = function(){
+        };
+        c.prototype.echo = function(){
+            console.log('test echo');
+        };
+        var c_sub = function(){};
+        c_sub.prototype = Object.create(c.prototype);
+
+        // like new statement;
+        console.log( Object.create(c.prototype) instanceof c );
+        console.log( new c instanceof c );
+
+        // new class is equal Object.create(class.prototype);
+    </script>
+</body>
+</html>
