@@ -59,18 +59,52 @@
     <hr />
 
     <!-- Create by Web Component -->
-        <link rel="import" id="ui_1" href="utils.html">
+        <link rel="import" id="ui_1" href="utils2.html">
         <p>In shadow dom:</p>
         <div id="for_test4"></div>
         <script>
             var tpl = document.querySelector('link').import.querySelector('#test4').content;
+            // test selector
             var tdiv = document.querySelector('div#for_test4');
-            tdiv.createShadowRoot().appendChild(tpl);
+            var rootS = tdiv.createShadowRoot();
+            // .createShadowRoot() will shadow origin content element.
+            rootS.appendChild(tpl);
         </script>
         <p>In main dom:</p>
         <div>
             Hello World
         </div>
 
+        <template id="test5">
+            <div>hello all5</div>
+        </template>
+        <template id="test6">
+            <div>hello all6</div>
+        </template>
+
+        <script>
+            // Same Scope Dom can be selector
+            var _t_div = document.querySelector('template#test5').content.querySelector('div');
+            var _t_div2 = document.querySelector('template#test6').content.querySelector('div');
+
+            var change_shadow_dom = function(){
+
+                if(
+                    tdiv.shadowRoot.querySelector('div').textContent != 'hello all5'
+                    ){
+                    tdiv.createShadowRoot().appendChild(_t_div);
+                }
+                else{
+                    tdiv.createShadowRoot().appendChild(_t_div2);
+                }
+                // only once access
+                // tdiv.createShadowRoot().appendChild(tpl);
+            };
+
+
+
+        </script>
+
+        <button onclick="change_shadow_dom();">change_shadow_dom</button>
 </body>
 </html>
