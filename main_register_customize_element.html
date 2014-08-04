@@ -35,16 +35,20 @@
             a.prototype = new Date();       // like this way!
         */
         var mybt_prototype_2 = Object.create(HTMLButtonElement.prototype);
-        mybt_proto2.createdCallback = function(){
+        mybt_prototype_2.createdCallback = function(){
             console.log('mybt_proto2 init\n');
         };
 
         document.registerElement('scott-panel2', {
-            prototype: mybt_proto2
+            prototype: mybt_prototype_2
         });
 
         var elm2 = document.createElement('scott-panel2');
         document.body.appendChild(elm2);
+
+        // test if is instance of HTMLButtonElement;
+        console.log(
+            'elm2 instanceof HTMLButtonElement :' + (elm2 instanceof HTMLButtonElement).toString());
 
     </script>
 
@@ -65,7 +69,9 @@
         console.log( Object.create(c.prototype) instanceof c );
         console.log( new c instanceof c );
 
-        // new class is equal Object.create(class.prototype);
+        // new class is very similar to Object.create(class.prototype);
+        // you can new Class or Object.create(Class.prototype),
+        // but you can not new HTMLElement() instead new HTMLElement, this statement will throw error;
     </script>
 
     <script>
