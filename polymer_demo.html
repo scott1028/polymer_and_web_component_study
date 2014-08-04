@@ -6,6 +6,13 @@
         <polymer-element name="proto-element">
           <template>
             <span>I'm {{name}} <b>proto-element</b>. Check out my prototype.</span>
+
+            <br>
+
+            <!-- repeat only availiable in template tag -->
+            <template repeat="{{row in store}}">
+                <b>{{row}}</b>
+            </template>
             
             <!-- template tag will not display in the dom -->
             <template repeat="{{row in store}}">
@@ -27,13 +34,22 @@
 
                 var fd = this;
                 var i = this.store.length + 1;
+                var flag = true;
 
                 // cat replace by ajax prepare remote data fetcher
                 setInterval(function(){
-                    // make a closure
+                    // make a closure if you invoke any closure variable/function.
                     // console.log(fd);
-                    fd.store.push(++i);
-                }, 1000);
+                    if(fd.store.length <= 0){
+                        flag = true;
+                    }
+                    if(fd.store.length >= 8){
+                        flag = false;
+                    }
+
+                    flag ? fd.store.push(++i) : fd.store.pop();
+
+                }, 50);
 
               },
               // customize value;
