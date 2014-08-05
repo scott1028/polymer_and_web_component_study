@@ -1,6 +1,7 @@
 <html>
     <script src="bower_components/platform/platform.js"></script>
     <script src="bower_components/polymer/polymer.js"></script>
+
     <body>
         <!-- Define -->
         <polymer-element name="proto-element">
@@ -10,14 +11,19 @@
             <br>
 
             <!-- repeat only availiable in template tag -->
-            <template repeat="{{row in store}}">
-                <b>{{row}}</b>
-            </template>
+            <div>
+                <span>-</span>
+                <template repeat="{{row in store}}">
+                    <b>{{row}}</b>
+                </template>
+            </div>
             
             <!-- template tag will not display in the dom -->
-            <template repeat="{{row in store}}">
-                <p>{{row}}</p>    
-            </template>
+            <div style="float: right;">
+                <template repeat="{{row in store}}">
+                    <p>{{row}}</p>
+                </template>
+            </div>
 
             <style>
                 p {
@@ -62,5 +68,12 @@
         <!-- Invoke -->
         <proto-element></proto-element>
         <p>Hello all</p>
+
+        <!-- Demo use import system by polymer -->
+            <hr />
+
+            <link rel="import" href="polymer_ui_define.html">
+
+            <x-scott-test></x-scott-test>
     </body>
 </html>

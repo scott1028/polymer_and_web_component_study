@@ -1,0 +1,35 @@
+<!-- import polymer lib -->
+<!-- you can load it in the main.html -->
+<!-- <link rel="import" href="bower_components/polymer/polymer.html"> -->
+
+<!-- Define -->
+<polymer-element name="x-scott-test">
+  <template>
+    <span>I'm {{name}} <b>proto-element</b>. Template be imported from "polymer_ui_define.html".</span>
+
+    <br>
+
+    <!-- repeat only availiable in template tag -->
+    <template repeat="{{row in store}}">
+        <b>{{row}}</b>
+    </template>
+
+    <style>
+        p {
+            color: red;
+        }
+    </style>
+
+  </template>
+  <script>
+    Polymer('x-scott-test', {
+      ready: function() {
+        // init
+        this.shadowRoot.querySelector('span b').textContent += " By Blue";
+      },
+      // customize value;
+      name: 'Scott',
+      store: ['s', 'c', 'o', 't', 't']
+    });
+  </script>
+</polymer-element>
