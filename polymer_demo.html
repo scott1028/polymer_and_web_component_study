@@ -6,7 +6,7 @@
         <!-- Define -->
         <polymer-element name="proto-element">
           <template>
-            <span>I'm {{name}} <b>proto-element</b>. Check out my prototype.</span>
+            <span>I'm {{name}} <b>proto-element</b>. Check out my prototype.<b>(shadow dom type)</b></span>
 
             <br>
 
@@ -79,32 +79,67 @@
         <!-- Direct use Template for Render Component -->
             <template id="tpl1" repeat="{{response.feed.entry}}">
                 <div>{{title.$t}}</div>
+                <b>document-fragment type</b>
             </template>
 
             <script>
                 document.querySelector('template#tpl1').model = {
-                    response: {feed: {
-                        entry: [{
-                            title: {
-                                $t: '456'
-                            }
-                        }]
-                    }}
+                    response: {
+                        feed: {
+                            entry: [
+                                {
+                                    title: {
+                                        $t: '456'
+                                    }
+                                }
+                            ]
+                        }
+                    }
                 };
             </script>
 
+            <!-- difference to customize element tag -->
+            <!-- can not use row in store in document-fragment type -->
+            <!-- but avaliable in shadow-dom type. -->
+            <!-- maybe this is a bug... -->
             <template id="tpl2" repeat="{{store}}">
+                <p>{{[0]}}</p>
                 <p>{{title}}</p>
+                <b>document-fragment type</b>
             </template>
 
             <script>
                 document.querySelector('template#tpl2').model = {
                     store: [
-                        // '1', '2', '3'
-                        {title: 1}
+                        '9', '2', '3',
+                        {title: 'test'},
+                        {title: 'test2'},
                     ]
                 };
-            </script>            
+            </script>
+
+            <hr />
+
+        <!-- Document-Flagment Tech -->
+        <script>
+            // create a flagment container
+            var fragment = document.createDocumentFragment();
+
+            var item = document.createElement('div');
+            
+            for( var i=0; i<10; i++ ) {
+                var item = document.createElement('div');
+                item.textContent = 'Element-'+i;
+                item.style.background = 'gold';
+                item.style.padding = '5';
+                item.style.margin = '5';
+                item.style.float = 'left';
+                fragment.appendChild(item.cloneNode(true));
+            }
+
+            // faster than innerHTML, appendChild, cloneNode....etc
+            document.querySelector('body').appendChild(fragment);
+        </script>
 
     </body>
 </html>
