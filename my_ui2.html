@@ -1,0 +1,38 @@
+<polymer-element name="my-ui2">
+  <!-- View -->
+  <template>
+    <span>I'm {{name}}. Template be imported from "my_ui2.html".<button>Echo</button></span>
+
+    <br>
+
+    <style>
+        span {
+            color: green;
+        }
+    </style>
+
+  </template>
+
+  <!-- Script -->
+  <script>
+    Polymer('my-ui2', {
+      ready: function() {
+        // init
+        this.shadowRoot.querySelector('button').textContent += " By Blue";
+        this.name = 'Scott';
+        
+        $this = this;
+
+        this.shadowRoot.querySelector('button').onclick = function(e){
+          console.log($this.name);
+          if($this.name == 'Scott'){
+            $this.name = 'Alan';
+          }
+          else{
+            $this.name = 'Scott'; 
+          }
+        }
+      },
+    });
+  </script>
+</polymer-element>

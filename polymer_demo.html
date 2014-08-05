@@ -120,30 +120,33 @@
 
             <hr />
 
+        <!-- Customize Element -->
+            <link rel="import" href="my_ui2.html">
+            <my-ui2></my-ui2>
+
         <!-- Document-Flagment Tech -->
-        <script>
-            // http://blog.rx836.tw/blog/javascript-documentframent/
-            // http://jsperf.com/appendchild-vs-documentfragment-vs-innerhtml/8
-            // 
-            // create a flagment container
-            var fragment = document.createDocumentFragment();
+            <script>
+                // http://blog.rx836.tw/blog/javascript-documentframent/
+                // http://jsperf.com/appendchild-vs-documentfragment-vs-innerhtml/8
+                // 
+                // create a flagment container
+                var fragment = document.createDocumentFragment();
 
-            var item = document.createElement('div');
-            
-            for( var i=0; i<10; i++ ) {
                 var item = document.createElement('div');
-                item.textContent = 'Element-'+i;
-                item.style.background = 'gold';
-                item.style.padding = '5';
-                item.style.margin = '5';
-                item.style.float = 'left';
-                fragment.appendChild(item.cloneNode(true));
-                // use virtual DOM(document-flagment) to avoid view refresh
-            }
+                
+                for( var i=0; i<10; i++ ) {
+                    var item = document.createElement('div');
+                    item.textContent = 'Element-'+i;
+                    item.style.background = 'gold';
+                    item.style.padding = '5';
+                    item.style.margin = '5';
+                    item.style.float = 'left';
+                    fragment.appendChild(item.cloneNode(true));
+                    // use virtual DOM(document-flagment) to avoid view refresh
+                }
 
-            // faster than innerHTML, appendChild, cloneNode....etc
-            document.querySelector('body').appendChild(fragment);
-        </script>
-
+                // faster than innerHTML, appendChild, cloneNode....etc
+                document.querySelector('body').appendChild(fragment);
+            </script>
     </body>
 </html>
