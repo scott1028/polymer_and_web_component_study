@@ -75,5 +75,36 @@
             <link rel="import" href="polymer_ui_define.html">
 
             <x-scott-test></x-scott-test>
+
+        <!-- Direct use Template for Render Component -->
+            <template id="tpl1" repeat="{{response.feed.entry}}">
+                <div>{{title.$t}}</div>
+            </template>
+
+            <script>
+                document.querySelector('template#tpl1').model = {
+                    response: {feed: {
+                        entry: [{
+                            title: {
+                                $t: '456'
+                            }
+                        }]
+                    }}
+                };
+            </script>
+
+            <template id="tpl2" repeat="{{store}}">
+                <p>{{title}}</p>
+            </template>
+
+            <script>
+                document.querySelector('template#tpl2').model = {
+                    store: [
+                        // '1', '2', '3'
+                        {title: 1}
+                    ]
+                };
+            </script>            
+
     </body>
 </html>
