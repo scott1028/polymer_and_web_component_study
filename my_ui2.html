@@ -1,7 +1,12 @@
 <polymer-element name="my-ui2">
   <!-- View -->
   <template>
-    <span>I'm {{name}}. Template be imported from "my_ui2.html".<button>Echo</button></span>
+    <span>
+      I'm {{name}}. Template be imported from "my_ui2.html".
+      <button>Echo</button>
+      <button id="remove">Remove</button>
+      <button id="set_attributes">Set Attributes</button>
+    </span>
 
     <br>
 
@@ -16,13 +21,20 @@
   <!-- Script -->
   <script>
     Polymer('my-ui2', {
+      // 0
+      created: function(){
+        console.log('created');
+      },
+      // 1
       ready: function() {
         // init
         this.shadowRoot.querySelector('button').textContent += " By Blue";
         this.name = 'Scott';
         
+        // make a closure variable
         $this = this;
 
+        // test ui script binding
         this.shadowRoot.querySelector('button').onclick = function(e){
           console.log($this.name);
           if($this.name == 'Scott'){
@@ -32,7 +44,40 @@
             $this.name = 'Scott'; 
           }
         }
+
+        // test detached
+        this.shadowRoot.querySelector('button#remove').onclick = function(e){
+          $this.remove();
+        };
+
+        // test attributeChanged
+        this.shadowRoot.querySelector('button#set_attributes').onclick = function(e){
+          if($this.getAttribute('test') == '1'){
+            $this.setAttribute('test', 2);
+          }
+          else{
+            $this.setAttribute('test', 1);
+          }
+        };
+
+        console.log('ready');
       },
+      // 2
+      attached: function(){
+        console.log('attached');
+      },
+      // 3
+      domReady: function(){
+        console.log('domReady');
+      },
+      // 4(when remove self)
+      detached: function(){
+        console.log('detached');
+      },
+      // 5(when attributes changed)
+      attributeChanged: function(){
+        console.log('attributeChanged');
+      }
     });
   </script>
 </polymer-element>
