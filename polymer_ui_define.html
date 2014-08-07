@@ -28,6 +28,8 @@
         // init
         this.shadowRoot.querySelector('span b').textContent += " By Blue";
 
+        console.log(this);
+
         // 
         // You can handle your event and trigger here
         // 
@@ -50,9 +52,13 @@
         // make light dom change
         document.querySelector('x-scott-test').querySelector('button').textContent = '3123';
 
-        console.log(this);
-
         // http://www.polymer-project.org/docs/polymer/polymer.html#asyncmethod
+
+        // http://www.polymer-project.org/docs/polymer/polymer.html#change-watchers
+        // like angularjs $watch
+
+        // http://www.polymer-project.org/docs/polymer/polymer.html#declarative-event-mapping
+        // customize event mapping config
 
       },
       nodeChange: function(observer, mutations){
