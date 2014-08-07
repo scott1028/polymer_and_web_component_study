@@ -48,18 +48,31 @@
         // Observe Element Node Changed and Handler
         // http://www.polymer-project.org/docs/polymer/polymer.html#builtin
         // http://www.polymer-project.org/platform/shadow-dom.html#shadow-dom-subtrees    explain: light dom, shadow dom
+        // binding and making light dom change for test onMutation
         this.onMutation(this, this.nodeChange);
-        // make light dom change
         document.querySelector('x-scott-test').querySelector('button').textContent = '3123';
 
         // http://www.polymer-project.org/docs/polymer/polymer.html#asyncmethod
 
-        // http://www.polymer-project.org/docs/polymer/polymer.html#change-watchers
-        // like angularjs $watch
-
-        // http://www.polymer-project.org/docs/polymer/polymer.html#declarative-event-mapping
         // customize event mapping config
+        // http://www.polymer-project.org/docs/polymer/polymer.html#declarative-event-mapping
 
+        // Data Binding and publish property( attributes="...." & hash property )
+        // http://www.polymer-project.org/docs/polymer/polymer.html#data-binding-and-published-properties
+
+        // like angularjs $watch, watch the property which is publish
+        // http://www.polymer-project.org/docs/polymer/polymer.html#change-watchers
+
+        // another statement style for observe property change config
+        // http://www.polymer-project.org/docs/polymer/polymer.html#observeblock
+
+        // fire custom event ( like: node.dispatchEvent(new CustomEvent(...)) )
+        // http://www.polymer-project.org/docs/polymer/polymer.html#fire
+
+        this.addEventListener('myEvent', function(e){
+          console.log(e);
+          console.log(e.detail);
+        });
       },
       nodeChange: function(observer, mutations){
         console.log('x-scott-test\'s light dom is change');
@@ -68,7 +81,11 @@
       },
       click: function(){
         console.log('button trigger on-click');
-        this.$.for_hash_search.remove()
+
+        // send to e.detail for {msg: 'That hurt!'}
+        this.fire('myEvent', {msg: 'That hurt!'});
+
+        this.$.for_hash_search.remove();
       },
       // customize value;
       name: 'Scott',
