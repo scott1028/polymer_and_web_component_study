@@ -5,7 +5,8 @@
 <!-- Define -->
 <polymer-element name="x-scott-test">
   <template>
-    <span>I'm {{name}} <b>proto-element</b>. Template be imported from "polymer_ui_define.html".</span>
+    <span id="for_hash_search">I'm {{name}} <b>proto-element</b>. Template be imported from "polymer_ui_define.html".</span>
+    <button on-click={{click}}>Make Node Change to trigger onMutation</button>
 
     <br>
 
@@ -26,10 +27,66 @@
       ready: function() {
         // init
         this.shadowRoot.querySelector('span b').textContent += " By Blue";
+
+        // 
+        // You can handle your event and trigger here
+        // 
+
+        // http://www.polymer-project.org/docs/polymer/polymer.html#automatic-node-finding
+        console.log(this.$.for_hash_search);
+
+        // http://www.polymer-project.org/docs/polymer/polymer.html#fire
+        this.fire('myEvent', {msg: 'That hurt!'});
+        this.asyncFire('myEvent', {msg: 'That hurt!'});
+        
+        // View Template Inherits( call super, override ... etc )
+        // http://www.polymer-project.org/docs/polymer/polymer.html#extending-other-elements
+        // http://www.polymer-project.org/docs/polymer/polymer.html#overriding-a-parents-methods
+
+        // Observe Element Node Changed and Handler
+        // http://www.polymer-project.org/docs/polymer/polymer.html#builtin
+        // http://www.polymer-project.org/platform/shadow-dom.html#shadow-dom-subtrees    explain: light dom, shadow dom
+        this.onMutation(this, this.nodeChange);
+        // make light dom change
+        document.querySelector('x-scott-test').querySelector('button').textContent = '3123';
+
+        console.log(this);
+
+        // http://www.polymer-project.org/docs/polymer/polymer.html#asyncmethod
+
+      },
+      nodeChange: function(observer, mutations){
+        console.log('x-scott-test\'s light dom is change');
+
+        this.onMutation(this, this.nodeChange);
+      },
+      click: function(){
+        console.log('button trigger on-click');
+        this.$.for_hash_search.remove()
       },
       // customize value;
       name: 'Scott',
       store: ['s', 'c', 'o', 't', 't']
+    });
+  </script>
+</polymer-element>
+
+
+<polymer-element name="x-scott-test2">
+  <script>
+    Polymer('x-scott-test2', {
+      ready: function() {
+        this.onMutation(this, this.nodeChange);
+
+        console.log(this);
+
+        // http://www.polymer-project.org/docs/polymer/polymer.html#asyncmethod
+
+      },
+      nodeChange: function(observer, mutations){
+        console.log('x-scott-test2\'s light dom is change');
+        this.onMutation(this, this.nodeChange);
+      }
     });
   </script>
 </polymer-element>

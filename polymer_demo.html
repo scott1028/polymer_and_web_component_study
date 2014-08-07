@@ -74,7 +74,12 @@
 
             <link rel="import" href="polymer_ui_define.html">
 
-            <x-scott-test></x-scott-test>
+            <x-scott-test>
+                <button>test light dom</button>
+            </x-scott-test>
+            <x-scott-test2>
+                <p id="ldom">321</p><!-- this is x-scott-test2 light dom -->
+            </x-scott-test2>
 
         <!-- Direct use Template for Render Component -->
             <template id="tpl1" repeat="{{response.feed.entry}}">
