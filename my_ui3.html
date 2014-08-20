@@ -23,3 +23,14 @@
         }
     })(document.createElement); // get origin function post it to decorator function;
 </script>
+
+
+<!-- Override native Function by Decorator Pattern -->
+<script>
+    window.alert = (function(fn){
+        return function(msg){
+            console.log('%cBefore alert!', 'color: blue;');
+            return fn.call(window, msg);
+        }
+    })(window.alert);
+</script>
