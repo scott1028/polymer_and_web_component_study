@@ -30,7 +30,35 @@
     window.alert = (function(fn){
         return function(msg){
             console.log('%cBefore alert!', 'color: blue;');
-            return fn.call(window, msg);
+
+            // origin window.alert function
+            // return fn.call(window, msg);
+            
+            // desgin a own messageWindow.
+            var el = document.createElement('div');
+            el.onclick = function(){
+                fn.call(window, msg);
+                this.remove();
+            };
+            el.style.position = 'fixed'
+            el.style.top = '0px';
+            el.style.left = '0px';
+            el.style.width = '100%';
+            el.style.height = '100%';
+            el.style.textAlign = 'center';
+            el.style.backgroundColor = 'rgba(10, 10, 10, 0.7)';
+            el.style.padding = '10px';
+            el.style.fontSize = '24pt';
+            el.style.color = 'white';
+            el.style.fontWeight = 'bold';
+            el.style.paddingTop = '35%';
+            el.style.cursor = 'pointer';
+            el.onselectstart = function(){
+                return false;
+            };
+
+            el.textContent = msg;
+            document.body.appendChild(el);
         }
     })(window.alert);
 </script>
