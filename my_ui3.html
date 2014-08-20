@@ -1,0 +1,25 @@
+<script>
+    console.log('%cmy_ui3', 'color: red;');
+
+    HTMLButtonElement.prototype.click = function(){
+        console.log('my method -> click!');
+    };
+
+    // cant override .onclick, but can add new property
+    HTMLButtonElement.prototype.myProperty = function(){
+        console.log('click!!');
+    };
+
+    HTMLButtonElement.prototype.onclick = "11";
+
+    // Decorator Pattern
+    document.createElement = (function(fn){
+        return function(tagname){
+            var el = fn.call(document, tagname);
+            el.onclick = function(){
+                alert('click!!!!!');
+            };
+            return el;
+        }
+    })(document.createElement);
+</script>

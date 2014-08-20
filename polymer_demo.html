@@ -153,5 +153,21 @@
                 // faster than innerHTML, appendChild, cloneNode....etc
                 document.querySelector('body').appendChild(fragment);
             </script>
+
+        <!-- Customize Element -->
+            <link rel="import" href="my_ui3.html">
+            <button id="my_ui3a">my_ui3</button>
+            <script>
+                // check if this instance contain click property
+                console.log(
+                    document
+                    .querySelector('#my_ui3a')
+                    .click);
+
+                // test2
+                var el = document.createElement('div');
+                el.textContent = 'test create!';
+                document.body.appendChild(el);
+            </script>
     </body>
 </html>
