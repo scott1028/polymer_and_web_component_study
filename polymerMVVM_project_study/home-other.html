@@ -1,10 +1,36 @@
 <link rel="import" href="/bower_components/polymer/polymer.html">
 <!-- <link rel="import" href="/layouts/sidebar-layout.html"> -->
 
-<polymer-element name="home-other" noscript>
+<polymer-element name="home-other">
 
     <template>
-        <h1>home-other.html by</h1>
+        <h1>home-other.html by owner: {{owner}}</h1>
+        <label><b>Data-Binding Test:</b></label><input value="{{owner}}" />
+
+        <!-- repeat directive only can be used with template element's attributes -->
+        <!-- <template repeat="{{item in dataList}}">
+            <br /><span>{{item}}</span>
+        </template> -->
+
+        <template repeat="{{item in dataList}}">
+            <br /><label><b>Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" />
+        </template>
+        <br /><button on-click="{{updateData}}">Save!</button>
     </template>
+
+    <script>
+        Polymer({
+            is: "home-other",
+            ready: function() {
+                // set this element's owner property
+                this.owner = "Daniel";
+                this.dataList = [1, 2, 100, 4, 5, 99];
+            },
+            updateData: function(){
+                console.log(this);
+                console.log(this.dataList);
+            }
+        });
+    </script>
 
 </polymer-element>
