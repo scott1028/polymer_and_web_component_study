@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>App Router</title>
+    <script src="/bower_components/platform/platform.js"></script>
+    <link rel="import" href="/bower_components/app-router/app-router.html">
+</head>
+<body>
+    <!-- Public Template -->
+    <a href="#/home">/home</a>
+    <a href="#/home/abc">/home/abc</a>
+    <a href="#/go/100/70">/go/100/70</a>
+    <a href="#/go/100">/go/100</a>
+
+    <!-- Part Viewport, render and defined route here -->
+    <app-router>
+        <!-- matches an exact path -->
+        <app-route path="/home" import="home-page.html"></app-route>
+
+        <!-- matches using a wildcard -->
+        <app-route path="/home/*" import="home-other.html"></app-route>
+
+        <!-- matches using a path variable -->        
+        <app-route path="/go/:id/:name" import="home-id.html"></app-route>
+        <app-route path="/go/:id" import="home-id.html"></app-route>
+
+        <!-- matches using a path variable -->
+        <!-- <app-route path="/order/:id" import="/pages/order-page.html"></app-route> -->
+
+        <!-- matches a pattern like '/word/number' -->
+        <!-- <app-route path="/^\/\w+\/\d+$/i" regex import="/pages/regex-page.html"></app-route> -->
+
+        <!-- matches everything else -->
+        <!-- <app-route path="*" import="/pages/not-found-page.html"></app-route> -->
+    </app-router>
+</body>
+</html>
