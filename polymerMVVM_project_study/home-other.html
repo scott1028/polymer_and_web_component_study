@@ -12,7 +12,10 @@
 
                 <label><b>Data-Binding Test:</b></label><input value="{{owner}}" />
 
+                <div style="color: red;">Will now work, due to owner will be emtyp first.<span>## [[owner]] ##</span></div>
+
                 <template repeat="{{item in dataList}}">
+                    <div style="color: blue;">Work fine, due to top node ready, the owner has value.<span>## [[owner]] ##</span></div>
                     <br /><span>{{item}}</span><span>{{owner}}</span><input value="{{owner}}" />
                 </template>
 
@@ -51,6 +54,19 @@
 
                 <template repeat="{{item in dataList3}}">
                     <br /><span>{{item}}</span><span>{{owner}}</span><input value="{{owner}}" />
+                </template>
+
+                <template repeat="{{item, index in dataList3}}">
+                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" on-change="{{onChangeData}}" />
+                </template>
+
+            </div>
+
+            <div style="flex: 1;">
+                <h2>(O) Repeat input Update Model work incorrect with values with Arrary.keys()</h2>
+
+                <template repeat="{{item in dataList3}}">
+                    <br /><span>{{item}}</span><span>## [[owner]] ##</span><input value="{{owner}}" />
                 </template>
 
                 <template repeat="{{item, index in dataList3}}">
