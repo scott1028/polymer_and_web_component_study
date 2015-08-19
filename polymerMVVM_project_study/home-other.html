@@ -5,16 +5,44 @@
 
     <template>
         <h1>home-other.html by owner: {{owner}}</h1>
+
+        <h2>(X) Repeat input Update Model work incorrect!</h2>
+
         <label><b>Data-Binding Test:</b></label><input value="{{owner}}" />
         <!-- repeat directive only can be used with template element's attributes -->
         <template repeat="{{item in dataList}}">
-            <br /><span>{{item}}</span>
+            <br /><span>{{item}}</span><span>{{owner}}</span><input value="{{owner}}" />
         </template>
 
-        <template repeat="{{item in dataList}}">
-            <br /><label><b>Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" />
+        <template repeat="{{item, index in dataList}}">
+            <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" on-change="{{onChangeData}}" />
         </template>
-        <br /><button type="submit" on-click="{{updateData}}">Save!</button>
+
+        <br />
+        <input value="{{dataList[3]}}" />
+
+        <br /><button type="submit" on-click="{{clickUpdateDataButton}}">Save!</button>
+
+
+        <hr />
+
+        <h2>(O) Repeat input Update Model work correct!</h2>
+
+        <template repeat="{{item in dataList2}}">
+            <br /><span>{{item.value}}</span>
+        </template>
+
+        <template repeat="{{item, index in dataList2}}">
+            <br /><label><b>idx:{{index}} Item Data-Binding Test({{item.label}}):</b></label><input value="{{item.value}}" on-change="{{onChangeData}}" />
+        </template>
+
+        <template repeat="{{item, index in dataList2}}">
+            <br /><label><b>idx:{{index}} Item Data-Binding Test({{item.value}}):</b></label><input value="{{item.label}}" on-change="{{onChangeData}}" />
+        </template>
+
+        <br />
+        <input value="{{dataList2[3]}}" />
+
     </template>
 
     <script>
@@ -23,11 +51,39 @@
             ready: function() {
                 // set this element's owner property
                 this.owner = "Daniel";
-                this.dataList = [1, 2, 100, 4, 5, 99];
+                
+
+                //
+                var dataList = [1, 2, 100, 4, 5, 99];
+
+                var dataList2 = [
+                    { label: 'a', value: 1 },
+                    { label: 'b', value: 2 },
+                    { label: 'c', value: 3 },
+                ];
+
+
+                // set ref to a pointer
+                this.dataList = dataList;
+                this.dataList2 = dataList2;
+
+
+                // update this reference value
+                // setInterval(function(e){
+                //     dataList[0] += 1;
+                // }, 1000);
             },
-            updateData: function(){
+            clickUpdateDataButton: function(){
                 console.log(this);
                 console.log(this.dataList);
+            },
+            onChangeData: function(e, a, b, c){
+                // debugger;
+                console.log(e, a, b, c);
+                console.log(e.target.value);
+                console.log(e.target.value.index);
+                console.log(this.dataList);
+                // debugger;
             }
         });
     </script>
