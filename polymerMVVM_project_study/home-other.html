@@ -4,44 +4,60 @@
 <polymer-element name="home-other">
 
     <template>
-        <h1>home-other.html by owner: {{owner}}</h1>
+        <div style="display: flex;">
+            <div style="flex: 1;">
+                <h1>home-other.html by owner: {{owner}}</h1>
 
-        <h2>(X) Repeat input Update Model work incorrect!</h2>
+                <h2>(X) Repeat input Update Model work incorrect!</h2>
 
-        <label><b>Data-Binding Test:</b></label><input value="{{owner}}" />
-        <!-- repeat directive only can be used with template element's attributes -->
-        <template repeat="{{item in dataList}}">
-            <br /><span>{{item}}</span><span>{{owner}}</span><input value="{{owner}}" />
-        </template>
+                <label><b>Data-Binding Test:</b></label><input value="{{owner}}" />
 
-        <template repeat="{{item, index in dataList}}">
-            <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" on-change="{{onChangeData}}" />
-        </template>
+                <template repeat="{{item in dataList}}">
+                    <br /><span>{{item}}</span><span>{{owner}}</span><input value="{{owner}}" />
+                </template>
 
-        <br />
-        <input value="{{dataList[3]}}" />
+                <template repeat="{{item, index in dataList}}">
+                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" on-change="{{onChangeData}}" />
+                </template>
 
-        <br /><button type="submit" on-click="{{clickUpdateDataButton}}">Save!</button>
+                <br />
+                <label>Pointer to dataList[3]</label><input value="{{dataList[3]}}" />
 
+                <br /><button type="submit" on-click="{{clickUpdateDataButton}}">Save!</button>
+            </div>
 
-        <hr />
+            <div style="flex: 1;">
+                <h2>(O) Repeat input Update Model work correct with objects!</h2>
 
-        <h2>(O) Repeat input Update Model work correct!</h2>
+                <template repeat="{{item in dataList2}}">
+                    <br /><span>{{item.value}}</span>
+                </template>
 
-        <template repeat="{{item in dataList2}}">
-            <br /><span>{{item.value}}</span>
-        </template>
+                <template repeat="{{item, index in dataList2}}">
+                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item.label}}):</b></label><input value="{{item.value}}" on-change="{{onChangeData}}" />
+                </template>
 
-        <template repeat="{{item, index in dataList2}}">
-            <br /><label><b>idx:{{index}} Item Data-Binding Test({{item.label}}):</b></label><input value="{{item.value}}" on-change="{{onChangeData}}" />
-        </template>
+                <template repeat="{{item, index in dataList2}}">
+                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item.value}}):</b></label><input value="{{item.label}}" on-change="{{onChangeData}}" />
+                </template>
+                
+                <br />
+                
+                <input value="{{dataList2[0].value}}" />
+            </div>
 
-        <template repeat="{{item, index in dataList2}}">
-            <br /><label><b>idx:{{index}} Item Data-Binding Test({{item.value}}):</b></label><input value="{{item.label}}" on-change="{{onChangeData}}" />
-        </template>
+            <div style="flex: 1;">
+                <h2>(O) Repeat input Update Model work incorrect with values!</h2>
 
-        <br />
-        <input value="{{dataList2[3]}}" />
+                <template repeat="{{item in dataList3}}">
+                    <br /><span>{{item}}</span><span>{{owner}}</span><input value="{{owner}}" />
+                </template>
+
+                <template repeat="{{item, index in dataList3}}">
+                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" on-change="{{onChangeData}}" />
+                </template>
+            </div>
+        </div>
 
     </template>
 
@@ -62,10 +78,17 @@
                     { label: 'c', value: 3 },
                 ];
 
+                var dataList3 = [
+                    'a',
+                    'b',
+                    'c',
+                ];
+
 
                 // set ref to a pointer
                 this.dataList = dataList;
                 this.dataList2 = dataList2;
+                this.dataList3 = dataList3;
 
 
                 // update this reference value
