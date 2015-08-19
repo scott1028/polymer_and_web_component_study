@@ -6,7 +6,6 @@
     <template>
         <h1>home-other.html by owner: {{owner}}</h1>
         <label><b>Data-Binding Test:</b></label><input value="{{owner}}" />
-
         <!-- repeat directive only can be used with template element's attributes -->
         <template repeat="{{item in dataList}}">
             <br /><span>{{item}}</span>
@@ -15,7 +14,7 @@
         <template repeat="{{item in dataList}}">
             <br /><label><b>Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" />
         </template>
-        <br /><button on-click="{{updateData}}">Save!</button>
+        <br /><button type="submit" on-click="{{updateData}}">Save!</button>
     </template>
 
     <script>
