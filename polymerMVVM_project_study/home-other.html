@@ -19,6 +19,7 @@
                     <br /><span>{{item}}</span><span>{{owner}}</span><input value="{{owner}}" />
                 </template>
 
+                <h3>Integer binding</h3>
                 <template repeat="{{item, index in dataList}}">
                     <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" on-change="{{onChangeData}}" />
                 </template>
@@ -69,8 +70,9 @@
                     <br /><span>{{item}}</span><span>## [[owner]] ##</span><input value="{{owner}}" />
                 </template>
 
+                <h3>Update Root Model by manual with index attributes.</h3>
                 <template repeat="{{item, index in dataList3}}">
-                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" on-change="{{onChangeData}}" />
+                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" index="{{index}}" on-change="{{onChangeData}}" />
                 </template>
             </div>
         </div>
@@ -122,7 +124,10 @@
                 console.log(e.target.value);
                 console.log(e.target.value.index);
                 console.log(this.dataList);
-                // debugger;
+
+
+                // make update by manual way.
+                this.dataList[e.target.getAttribute('index')] = e.target.value;
             }
         });
     </script>
