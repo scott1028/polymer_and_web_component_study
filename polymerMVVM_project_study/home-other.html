@@ -6,9 +6,9 @@
     <template>
         <div style="display: flex;">
             <div style="flex: 1;">
-                <h1>home-other.html by owner: {{owner}}</h1>
+                <h2>home-other.html by owner: {{owner}}</h2>
 
-                <h2>(X) Repeat input Update Model work incorrect!</h2>
+                <h4>(X) Repeat input Update Model work incorrect!</h4>
 
                 <label><b>Data-Binding Test:</b></label><input value="{{owner}}" />
 
@@ -19,9 +19,9 @@
                     <br /><span>{{item}}</span><span>{{owner}}</span><input value="{{owner}}" />
                 </template>
 
-                <h3>Integer binding</h3>
+                <h4>Integer binding</h4>
                 <template repeat="{{item, index in dataList}}">
-                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" on-change="{{onChangeData}}" />
+                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" />
                 </template>
 
                 <br />
@@ -31,48 +31,33 @@
             </div>
 
             <div style="flex: 1;">
-                <h2>(O) Repeat input Update Model work correct with objects!</h2>
+                <h2>#3 陣列內如果是 int 或是 String, 總之非 Object 的時候 Binding 會無法回傳到 Root Model.</h2>
+                <h4>...只能在當前 Instance DOM 內更新(Polymer Bug?)</h4>
+                <template repeat="{{item, index in dataList3}}">
+                    <br /><label><b>idx:{{debugTest(index)}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" />
+                </template>
 
+                <h4>Solution List:</h4>
+
+                <h5>#2.0 使用 Filter 把 Values 轉為 HashMap by "dataList | debugTest2" or "debugTest2(dataList)"</h5>
+                <template repeat="{{item, index in dataList | debugTest2}}">
+                    <br /><label><b>idx:{{debugTest(index)}} Item Data-Binding Test({{item}}):</b></label><input value="{{dataList[item]}}" />
+                </template>
+
+                <h5>#2.1 自己實作 dom index attributes 跟 on-change 監聽.</h5>
+                <template repeat="{{item, index in dataList}}">
+                    <br /><label><b>idx:{{debugTest(index)}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" index="{{index}}" on-change="{{onChangeData}}" />
+                </template>
+            </div>
+
+            <div style="flex: 1;">
+                <h2>#1 基本 Polymer Repeat 後能正常 Binding 的只有 Objects Arrary.</h2>
                 <template repeat="{{item in dataList2}}">
-                    <br /><span>{{item.value}}</span>
+                    <br /><label><b>Template#1 >> idx:{{index}} Item Data-Binding Test({{item.label}}):</b><span>{{item.value}}</span>
                 </template>
-
+                <hr />
                 <template repeat="{{item, index in dataList2}}">
-                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item.label}}):</b></label><input value="{{item.value}}" on-change="{{onChangeData}}" />
-                </template>
-
-                <template repeat="{{item, index in dataList2}}">
-                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item.value}}):</b></label><input value="{{item.label}}" on-change="{{onChangeData}}" />
-                </template>
-                
-                <br />
-                
-                <input value="{{dataList2[0].value}}" />
-            </div>
-
-            <div style="flex: 1;">
-                <h2>(O) Repeat input Update Model work incorrect with values!</h2>
-
-                <template repeat="{{item in dataList3}}">
-                    <br /><span>{{item}}</span><span>{{owner}}</span><input value="{{owner}}" />
-                </template>
-
-                <template repeat="{{item, index in dataList3}}">
-                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" on-change="{{onChangeData}}" />
-                </template>
-
-            </div>
-
-            <div style="flex: 1;">
-                <h2>(O) Repeat input Update Model work incorrect with values with Arrary.keys()</h2>
-
-                <template repeat="{{item in dataList3}}">
-                    <br /><span>{{item}}</span><span>## [[owner]] ##</span><input value="{{owner}}" />
-                </template>
-
-                <h3>Update Root Model by manual with index attributes.</h3>
-                <template repeat="{{item, index in dataList3}}">
-                    <br /><label><b>idx:{{index}} Item Data-Binding Test({{item}}):</b></label><input value="{{item}}" index="{{index}}" on-change="{{onChangeData}}" />
+                    <br /><label><b>idx:{{debugTest(index)}} Item Data-Binding Test({{item}}):</b></label><input value="{{item.value}}" />
                 </template>
             </div>
         </div>
@@ -128,6 +113,19 @@
 
                 // make update by manual way.
                 this.dataList[e.target.getAttribute('index')] = e.target.value;
+            },
+            debugTest: function(obj){
+                console.info(obj);
+                return obj;
+            },
+            // 把 Values Array 在 Maping UI 之前轉成物件 Objects Array 避免無法 TwoWayBinding 問題( "debugTest2([...])" or "[...] | debugTest2" )
+            debugTest2: function(obj){
+                console.warn(obj);
+                if(obj)
+                    return Object.keys(obj);
+            },
+            myFilter: function(obj){
+                if(obj) return obj.unshift('x');
             }
         });
     </script>
